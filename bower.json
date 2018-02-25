@@ -1,0 +1,21 @@
+{
+  "name": "node_react_obj2",
+  "description": "",
+  "main": "",
+  "authors": [
+    "zhangxiaolin <zhangtanlin90@126.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/zhangtanlin/node_guangdian",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "jquery": "1.12.4"
+  }
+}

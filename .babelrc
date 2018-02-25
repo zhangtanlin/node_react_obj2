@@ -1,0 +1,12 @@
+{
+  "presets": ["react"],
+  "plugins": [ 	
+  	"transform-react-constant-elements",
+  	"transform-react-display-name",
+  	"transform-react-inline-elements",
+  	"transform-react-jsx",
+  	"transform-react-jsx-compat",
+  	"transform-react-jsx-self",
+  	"transform-react-jsx-source"
+  ]
+}
