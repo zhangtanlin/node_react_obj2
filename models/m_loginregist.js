@@ -3,8 +3,7 @@ var mongoose = require('mongoose');
 var config = require('../config');
 var db = mongoose.connect(config.mongodb, {
     useMongoClient: true
-}); //红色为数据库名
-
+});
 //连接数据库Model
 var loginRegistSchema = new mongoose.Schema({
     user_name: {

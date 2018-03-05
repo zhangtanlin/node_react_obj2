@@ -1,15 +1,93 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-//引入antd样式
-import 'antd/dist/antd.less';
+import {Row, Col, Form, Icon, Input, Button, Checkbox } from 'antd';
+const FormItem = Form.Item;
+
+//引入登录界面特定样式
+import './login.less';
 
 class Login extends React.Component {
+	
+	//定义初始化值
+	constructor(){
+		super();
+		this.state = {
+			postForm:'123456789'
+		}
+	}
+	
+	//表单提交事件
+	handleSubmit(e){
+	    e.preventDefault();
+	    this.props.form.validateFields((err, values) => {
+	    	if (!err) {
+	        	console.log(values);
+	        	//提交
+			    fetch('/loginRegist/loginPost',{
+			    	'method':'POST',
+			    	'headers':{
+//			    		'Content-Type':'application/x-www-form-urlencoded',
+			    		'Accept': 'application/json',
+			    		'Content-Type': 'application/json'
+			    	},
+//			    	'body':`user_name=${values.user_name}&user_password=${values.user_password}`
+			    	'body':JSON.stringify(values)
+			    })
+				.then(response => response.json())
+				.then(data => {
+					console.log(data);
+					this.setState({postForm:data.message});
+					location.href = data.address;
+				})
+	      	}else{
+	      		alert('服务器错误');
+	      	}
+	    });
+	}
+	
 	render() {
+		
+		const { getFieldDecorator } = this.props.form;
+		
 		return(
-			<div>登录</div>
+			<Row>
+				<Col offset={9} span={6}>
+				
+					<span >{this.state.postForm}</span>
+				
+					<Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
+				        <FormItem>
+				          	{getFieldDecorator('user_name', {
+				            	rules: [{ required: true, message: 'Please input your username!' }],
+				          	})(
+				            	<Input prefix={<Icon type="user"/>} placeholder="请输入用户名" />
+				          	)}
+				        </FormItem>
+				        <FormItem>
+				          	{getFieldDecorator('user_password', {
+				            	rules: [{ required: true, message: 'Please input your Password!' }],
+				          	})(
+				            	<Input prefix={<Icon type="lock"/>} type="password" placeholder="请输入密码" />
+				          	)}
+				        </FormItem>
+				        <FormItem>
+				          	<a className="login-form-forgot loginForgot" href="">找回密码</a>
+				        </FormItem>
+				        <FormItem>
+				          	<Button type="primary" icon="user" htmlType="submit" className="login-form-button loginBtn">
+				            	登录
+				          	</Button>
+				          	<Button type="primary" icon="user-add" className="login-form-button loginBtn">
+				            	注册
+				          	</Button>
+				        </FormItem>
+				    </Form>
+				</Col>
+			</Row>
 		)
 	}
 }
 
-ReactDOM.render(<Login/>,document.getElementById("login"));
+const WrappedNormalLoginForm = Form.create()(Login);
+ReactDOM.render(<WrappedNormalLoginForm />,document.getElementById("login"));

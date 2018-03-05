@@ -37,7 +37,7 @@ module.exports = {
 	    ]
 	},
 	plugins:[
-		new ExtractTextPlugin('./css/antd.css')
+		new ExtractTextPlugin('./css/[name].css')
 	],
 	output: {
 		path: __dirname + "/public/dist/", //如果需要静态资源再把这个打开
