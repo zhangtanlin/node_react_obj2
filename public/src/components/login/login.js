@@ -22,10 +22,10 @@ class Login extends React.Component {
 	    e.preventDefault();
 	    this.props.form.validateFields((err, values) => {
 	    	if (!err) {
-	        	console.log(values);
 	        	//提交
 			    fetch('/loginRegist/loginPost',{
 			    	'method':'POST',
+			    	'credentials': 'include',//支持cookie传递
 			    	'headers':{
 //			    		'Content-Type':'application/x-www-form-urlencoded',
 			    		'Accept': 'application/json',
@@ -36,8 +36,10 @@ class Login extends React.Component {
 			    })
 				.then(response => response.json())
 				.then(data => {
-					console.log(data);
 					this.setState({postForm:data.message});
+					//浏览器保存user_name
+					localStorage.userName = data.userName;
+					//浏览器跳转
 					location.href = data.address;
 				})
 	      	}else{
@@ -58,14 +60,14 @@ class Login extends React.Component {
 				
 					<Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
 				        <FormItem>
-				          	{getFieldDecorator('user_name', {
+				          	{getFieldDecorator('userName', {
 				            	rules: [{ required: true, message: 'Please input your username!' }],
 				          	})(
 				            	<Input prefix={<Icon type="user"/>} placeholder="请输入用户名" />
 				          	)}
 				        </FormItem>
 				        <FormItem>
-				          	{getFieldDecorator('user_password', {
+				          	{getFieldDecorator('userPassword', {
 				            	rules: [{ required: true, message: 'Please input your Password!' }],
 				          	})(
 				            	<Input prefix={<Icon type="lock"/>} type="password" placeholder="请输入密码" />

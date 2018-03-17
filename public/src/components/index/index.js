@@ -13,18 +13,28 @@ class Index extends React.Component {
 	constructor(){
 		super();
 		this.state = {
-		    collapsed: false,
+		    collapsed: true,//左侧导航收缩展开状态
 		    hasLogined:false,
-		    name:"admin",
-		    user:""
+		    userName:""
 		};
 	}
 	
 	//【react生命周期】模块加载之前判定
 	componentWillMount(){
-    	if(localStorage.user){
-      		this.setState({hasLogined:true});
-    	}
+		//请求用户的登录状态
+	    fetch('/loginRegist/loginState',{
+	    	'method':'POST',
+	    	'credentials': 'include',//支持cookie传递
+	    	'headers':{
+			    'Content-Type':'application/x-www-form-urlencoded',//默认协议可以不写headers
+			},
+			'body':'getLoginState=true'
+	    })
+		.then(response => response.json())
+		.then(data => {
+			console.log(data)
+			//this.setState({'hasLogined':data.hasLogined,'userName':data.userName});
+		})
   	}
 	
 	//头部按钮控制左侧边栏收缩扩展
@@ -37,7 +47,7 @@ class Index extends React.Component {
 		//根据用户是否登录判定显示头部代码
 		const userState = this.state.hasLogined
 			?
-	        <a href="/loginRegist"><Icon type="user"/></a>
+	        <a href="/loginRegist"><Icon type="user"/>{this.state.userName}</a>
 	    	:
 	    	<a href="/loginRegist"><Icon type="select"/>登录/<Icon type="user-add"/>注册</a>
 		
@@ -69,6 +79,7 @@ class Index extends React.Component {
 		          	</Header>
 		          	<Content style={{margin:'20px',padding:'24',background:'#fff',minHeight:'280px'}}>
 						Content
+						{this.state.hasLogined}
 					</Content>
 		        </Layout>
 		    </Layout>

@@ -6,29 +6,25 @@ var db = mongoose.connect(config.mongodb, {
 });
 //连接数据库Model
 var loginRegistSchema = new mongoose.Schema({
-    user_name: {
+    userName: {
         type: String,
         unique: true, // 不可重复约束
         require: true // 不可为空约束
     },
-    user_password: {
+    userPassword: {
         type: String,
         require: true
     },
-    user_phone: {
+    userPhone: {
         type: String,
         require: true
     },
-    user_operation_time: {
+    userOperationTime: {
         type: Date,
         default: Date.now()
     },
-    user_type: {
+    userType: {
         type: String
-    },
-    token:{
-    	type: String,
-        require: true
     }
 });
 var m_loginregist = mongoose.model("loginRegist", loginRegistSchema, "user");
