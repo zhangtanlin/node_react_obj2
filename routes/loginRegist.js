@@ -18,7 +18,6 @@ router.post('/loginPost',function(req, res, next){
 	var params = req.body;
 	m_loginregist.find({}, function(err, resData) {
         if(err) return next(err);
-        
         var state = false,
         	message = '验证失败',
         	address = '/loginregist',
@@ -55,6 +54,7 @@ router.post('/loginState',function(req,res,next){
 	var params = req.body,
 		userName = '',
 		hasLogined = false;
+		console.log(req.session.user);
 	if(req.session.user != undefined){
 		userName = req.session.user.userName;
 		hasLogined = true;

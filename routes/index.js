@@ -1,6 +1,3 @@
-//session验证
-var session = require('./session.js');
-
 module.exports = function(app) {
 
 	//首页
@@ -12,6 +9,6 @@ module.exports = function(app) {
 	
 	//【登录注册】路由分发
 	var loginRegist = require('./loginRegist');
-	app.use('/loginRegist',session.sessionVerify,loginRegist);
+	app.use('/loginRegist',loginRegist);
 	
 }
