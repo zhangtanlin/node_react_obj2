@@ -36,7 +36,7 @@ class Login extends React.Component {
 			    })
 				.then(response => response.json())
 				.then(data => {
-					console.log(data);
+					//console.log(data);
 					this.setState({postForm:data.message});
 					//浏览器保存user_name
 					localStorage.userName = data.userName;

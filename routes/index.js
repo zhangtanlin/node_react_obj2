@@ -1,7 +1,10 @@
+//用户权限控制
+var session = require('./session');
+
 module.exports = function(app) {
 
 	//首页
-	app.get('/',function(req, res, next) {	
+	app.get('/',session.out,function(req, res, next) {	
 		//res.json({ message: 'hello index!'});
 		res.render('index');
 	});

@@ -6,8 +6,11 @@ var router = express.Router();
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
+//用户权限控制
+var session = require('./session');
+
 //登录界面获取
-router.get('/',function(req,res,next){
+router.get('/',session.out,function(req,res,next){
 	res.render('login');
 });
 
@@ -54,7 +57,6 @@ router.post('/loginState',function(req,res,next){
 	var params = req.body,
 		userName = '',
 		hasLogined = false;
-		console.log(req.session.user);
 	if(req.session.user != undefined){
 		userName = req.session.user.userName;
 		hasLogined = true;

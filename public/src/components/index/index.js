@@ -32,7 +32,7 @@ class Index extends React.Component {
 	    })
 		.then(response => response.json())
 		.then(data => {
-			console.log(data)
+			console.log(data);
 			this.setState({'hasLogined':data.hasLogined,'userName':data.userName});
 		})
   	}
